@@ -1,0 +1,74 @@
+import 'package:flutter/material.dart';
+import 'package:my_lab_app/Views/Home/home.page.dart';
+import 'package:my_lab_app/Views/RoomManager/room_manager.page.dart';
+import 'package:my_lab_app/Views/Rooms/room.page.dart';
+import 'package:my_lab_app/Views/UserRoomAccess/user_access.page.dart';
+import 'package:my_lab_app/Views/Users/user.page.dart';
+
+import '../Models/Menu/menu.model.dart';
+
+class MenuProvider extends ChangeNotifier {
+  initDefaultMenus() {
+    menus.clear();
+    notifyListeners();
+
+    menus = [
+      MenuModel(
+        title: "Accueil",
+        page: const HomePage(),
+        icon: Icons.dashboard_rounded,
+      ),
+
+      MenuModel(
+        title: "Utilisateurs",
+        page: const UserPage(),
+        icon: Icons.people_rounded,
+      ),
+      MenuModel(
+        title: "Salles",
+        page: const RoomPage(),
+        icon: Icons.house_siding_rounded,
+      ),
+      MenuModel(
+        title: "Gestion des salles",
+        page: const RoomManagerPage(),
+        icon: Icons.home_repair_service_rounded,
+      ),
+      MenuModel(
+        title: "Accès aux salles",
+        page: const UserAccessRoomPage(),
+        icon: Icons.lock_clock,
+      ),
+      MenuModel(
+        title: "Profile",
+        page: Container(),
+        icon: Icons.person_rounded,
+      ),
+    ];
+    notifyListeners();
+  }
+
+  List<MenuModel> menus = [];
+
+  resetMenu() {
+    activePage = MenuModel(
+      title: "Accueil",
+      page: HomePage(),
+      icon: Icons.home,
+    );
+    notifyListeners();
+  }
+
+  MenuModel activePage = MenuModel(
+    title: "Accueil",
+    page: HomePage(),
+    icon: Icons.home,
+  );
+
+  getActivePage() => activePage;
+
+  setActivePage({required MenuModel newPage}) {
+    activePage = newPage;
+    notifyListeners();
+  }
+}
