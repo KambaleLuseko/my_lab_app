@@ -4,8 +4,10 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:my_lab_app/Resources/Constants/global_variables.dart';
 import 'package:my_lab_app/Resources/Providers/menu_provider.dart';
 import 'package:my_lab_app/Resources/Providers/users_provider.dart';
+import 'package:my_lab_app/Views/Auth/login.page.dart';
 import 'package:my_lab_app/Views/RoomManager/controller/room_manager.provider.dart';
 import 'package:my_lab_app/Views/Rooms/controller/room.provider.dart';
+import 'package:my_lab_app/Views/Services/controller/service.provider.dart';
 import 'package:my_lab_app/Views/UserRoomAccess/controller/user_access.provider.dart';
 import 'package:my_lab_app/Views/main.page.dart';
 import 'package:provider/provider.dart';
@@ -35,6 +37,7 @@ void main() async {
         ChangeNotifierProvider(create: (_) => RoomProvider()),
         ChangeNotifierProvider(create: (_) => RoomManagerProvider()),
         ChangeNotifierProvider(create: (_) => UserAccessProvider()),
+        ChangeNotifierProvider(create: (_) => ServiceProvider()),
       ],
       child: const MyApp(),
     ),
@@ -42,7 +45,7 @@ void main() async {
 }
 
 String appaName = 'My Lab';
-List<String> storeNames = ['transactions', 'clients'];
+List<String> storeNames = ['users', 'rooms', 'room_managers', 'user_access'];
 
 final GlobalKey<NavigatorState> navKey = GlobalKey<NavigatorState>();
 
@@ -55,7 +58,7 @@ class MyApp extends StatelessWidget {
     WidgetsFlutterBinding.ensureInitialized();
 
     return MaterialApp(
-      title: 'MALIPO CASH',
+      title: appaName,
       theme: ThemeData(
         colorScheme: ColorScheme.light(
           primary: AppColors.kPrimaryColor,
@@ -68,7 +71,7 @@ class MyApp extends StatelessWidget {
           bodyLarge: TextStyle(fontSize: 18.0, color: Colors.black87),
         ),
       ),
-      home: MainPage(),
+      home: prefs.getString('loggedUser') == null ? LoginPage() : MainPage(),
       navigatorKey: navKey,
       debugShowCheckedModeBanner: false,
     );

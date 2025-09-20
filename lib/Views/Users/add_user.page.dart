@@ -62,7 +62,7 @@ class _AddUserPageState extends State<AddUserPage> {
       //     'founder') {
       //   userTypes = (["Admin", "Asset"]);
       // }
-      userTypes = ['Admin', 'Agent', 'Etudiant', 'Root'];
+      userTypes = ['Admin', 'Agent', 'Etudiant', 'Visiteur', 'Root'];
       setState(() {});
     });
   }

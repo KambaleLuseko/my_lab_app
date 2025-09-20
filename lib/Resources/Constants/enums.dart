@@ -4,4 +4,4 @@ enum MessageType { error, warning, success, info }
 
 enum TransactionTypesEnum { send, pay, recharge, deposit, withdraw }
 
-enum UserRolesEnum { admin, client, agent, root }
+enum UserRolesEnum { admin, student, visitor, group, agent, root }

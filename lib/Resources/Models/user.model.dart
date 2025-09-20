@@ -1,6 +1,8 @@
 // To parse this JSON data, do
 //
 //     final userModel = userModelFromJson(jsonString);
+import 'package:my_lab_app/Views/RoomManager/model/room_manager.model.dart';
+
 class UserModel {
   int? id;
   String? uuid;
@@ -81,14 +83,23 @@ class UserModel {
 class AuthModel {
   UserModel user;
   String? token;
-  AuthModel({required this.user, this.token});
+  RoomManagerModel? roomManager;
+  AuthModel({required this.user, this.token, this.roomManager});
 
   static fromJSON(json) {
-    return AuthModel(user: UserModel.fromJson(json), token: json['token']);
+    return AuthModel(
+      user: UserModel.fromJson(json['user']),
+      token: json['token'],
+      roomManager: json['roomAccess'],
+    );
   }
 
   toJSON() {
-    Map data = {...user.toJson(), 'token': token};
+    Map data = {
+      "user": user.toJson(),
+      'token': token,
+      "roomAccess": roomManager?.toJson(),
+    };
     data.removeWhere((key, value) => value == null);
     return data;
   }

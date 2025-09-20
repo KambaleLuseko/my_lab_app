@@ -3,7 +3,9 @@ import 'dart:convert';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
+import 'package:my_lab_app/Resources/Constants/navigators.dart';
 import 'package:my_lab_app/Resources/Models/user.model.dart';
+import 'package:my_lab_app/Views/Auth/login.page.dart';
 
 import '../../main.dart';
 import '../Components/dialogs.dart';
@@ -36,6 +38,26 @@ class UserProvider extends ChangeNotifier {
         msgType: MessageType.error,
         title: 'Erreur',
       );
+      return;
+    }
+    if (data.anneeAcademique!.isEmpty) {
+      if (data.role?.toLowerCase() == 'groupe' &&
+          int.tryParse(data.anneeAcademique!) == null) {
+        ToastNotification.showToast(
+          msg: "Veuillez saisir un nombre d'etudiants valide",
+          msgType: MessageType.error,
+          title: 'Erreur',
+        );
+        return;
+      }
+      ToastNotification.showToast(
+        msg: data.role?.toLowerCase() == 'groupe'
+            ? "Veuillez saisir le nombre d'etudiants"
+            : "Veuillez specifier l'annee academique",
+        msgType: MessageType.error,
+        title: 'Erreur',
+      );
+      return;
     }
     Response res;
     if (action == EnumActions.update) {
@@ -73,8 +95,7 @@ class UserProvider extends ChangeNotifier {
       }
 
       ToastNotification.showToast(
-        msg:
-            jsonDecode(res.body)['message'] ?? "Utilisateur ajouté avec succès",
+        msg: jsonDecode(res.body)['message'] ?? "Compte créé avec succès",
         msgType: MessageType.success,
         title: "Success",
       );
@@ -186,7 +207,7 @@ class UserProvider extends ChangeNotifier {
   // }
 
   login({required Map data, required Function callback}) async {
-    if (data['username'].isEmpty || data['password'].isEmpty) {
+    if (data['email'].isEmpty || data['password'].isEmpty) {
       ToastNotification.showToast(
         msg: "Veuillez remplir tous les champs",
         msgType: MessageType.error,
@@ -194,20 +215,15 @@ class UserProvider extends ChangeNotifier {
       );
       return;
     }
-    if (data['username'] == 'gen@g.com' && data['password'] == '1234') {
-      callback();
-      return;
-    }
+    // if (data['username'] == 'gen@g.com' && data['password'] == '1234') {
+    //   callback();
+    //   return;
+    // }
     // print(query);
     Response res;
     res = await AppProviders.appProvider.httpPost(
-      url: BaseUrl.signIn,
-      body: {
-        ...data,
-        "level": data['username'].toString().contains('root')
-            ? 'Root'
-            : "Admin",
-      },
+      url: '${BaseUrl.user}/login',
+      body: {...data},
     );
     // print(res.body);
     // return;
@@ -299,32 +315,35 @@ class UserProvider extends ChangeNotifier {
     String stringRole = userLogged?.user.role?.toLowerCase() ?? '';
     if (stringRole.toLowerCase().contains('admin')) {
       role = UserRolesEnum.admin;
-    } else if (stringRole.toLowerCase().contains('agent') ||
-        stringRole.toLowerCase().contains('cond')) {
+    } else if (stringRole.toLowerCase().contains('agent')) {
       role = UserRolesEnum.agent;
-    } else if (stringRole.toLowerCase().contains('client')) {
-      role = UserRolesEnum.client;
-    } else {
+    } else if (stringRole.toLowerCase().contains('root')) {
       role = UserRolesEnum.root;
+    } else if (stringRole.toLowerCase().contains('etudiant')) {
+      role = UserRolesEnum.student;
+    } else {
+      role = UserRolesEnum.group;
     }
 
     // offlineData = userLogged?.society?.assets ?? [];
     // print(userLogged?.toJson());
+    // print(role);
+    // print(stringRole);
     notifyListeners();
   }
 
-  logOut({required String password}) {
+  logOut({required String password}) async {
     prefs.clear();
     offlineData.clear();
 
-    LocalDataHelper.resetLocalData();
+    await LocalDataHelper.resetLocalData();
     userLogged = null;
     ToastNotification.showToast(
       msg: "Deconnecté",
       msgType: MessageType.success,
     );
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      // Navigation.pushRemove(page: const LoginPage());
+      Navigation.pushRemove(page: const LoginPage());
     });
     notifyListeners();
   }

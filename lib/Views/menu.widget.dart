@@ -51,21 +51,22 @@ class _MenuWidgetState extends State<MenuWidget> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           const SizedBox(height: 40),
-                          Container(
-                            width: 60,
-                            height: 60,
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(1000),
-                              border: Border.all(
-                                color: AppColors.kPrimaryColor,
-                                width: 2,
-                              ),
-                            ),
-                            child: const Stack(
-                              children: [AppLogo(size: Size(80, 80))],
-                            ),
-                          ),
+                          AppLogo(size: Size(180, 120)),
+                          // Container(
+                          //   width: 60,
+                          //   height: 60,
+                          //   alignment: Alignment.center,
+                          //   decoration: BoxDecoration(
+                          //     borderRadius: BorderRadius.circular(1000),
+                          //     border: Border.all(
+                          //       color: AppColors.kPrimaryColor,
+                          //       width: 2,
+                          //     ),
+                          //   ),
+                          //   child: const Stack(
+                          //     children: [AppLogo(size: Size(80, 80))],
+                          //   ),
+                          // ),
                           // TextWidgets.textBold(
                           //   title: userLogged != null
                           //       ? userLogged.user.uuid?.toUpperCase() ?? ''
@@ -83,6 +84,11 @@ class _MenuWidgetState extends State<MenuWidget> {
                             title:
                                 userLogged?.user.email ??
                                 'contact@${appaName.toLowerCase().replaceAll(' ', '')}',
+                            fontSize: 12,
+                            textColor: AppColors.kBlackColor,
+                          ),
+                          TextWidgets.text300(
+                            title: userLogged?.user.role?.toUpperCase() ?? '',
                             fontSize: 12,
                             textColor: AppColors.kBlackColor,
                           ),
@@ -107,42 +113,44 @@ class _MenuWidgetState extends State<MenuWidget> {
                   },
                 ),
               ),
-              // GestureDetector(
-              //   onTap: () {
-              //     context.read<UserProvider>().logOut(password: '1234');
-              //   },
-              //   child: Container(
-              //       decoration:
-              //           BoxDecoration(color: AppColors.kTextFormBackColor),
-              //       child: Padding(
-              //         padding: const EdgeInsets.all(8.0),
-              //         child: Row(
-              //           mainAxisSize: MainAxisSize.min,
-              //           children: [
-              //             !Responsive.isWeb(context)
-              //                 ? Icon(
-              //                     Icons.exit_to_app_sharp,
-              //                     color: AppColors.kRedColor,
-              //                   )
-              //                 : Container(),
-              //             !Responsive.isWeb(context)
-              //                 ? const SizedBox(width: 16.0)
-              //                 : Container(),
-              //             Expanded(
-              //               child: Container(
-              //                   padding: EdgeInsets.zero,
-              //                   child: Text(
-              //                     "Deconnexion",
-              //                     style: TextStyle(
-              //                         color: AppColors.kRedColor,
-              //                         fontSize: 14,
-              //                         fontWeight: FontWeight.bold),
-              //                   )),
-              //             )
-              //           ],
-              //         ),
-              //       )),
-              // )
+              GestureDetector(
+                onTap: () {
+                  context.read<UserProvider>().logOut(password: '1234');
+                },
+                child: Container(
+                  decoration: BoxDecoration(color: AppColors.kWhiteColor),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        !Responsive.isWeb(context)
+                            ? Icon(
+                                Icons.exit_to_app_sharp,
+                                color: AppColors.kRedColor,
+                              )
+                            : Container(),
+                        !Responsive.isWeb(context)
+                            ? const SizedBox(width: 16.0)
+                            : Container(),
+                        Expanded(
+                          child: Container(
+                            padding: EdgeInsets.zero,
+                            child: Text(
+                              "Deconnexion",
+                              style: TextStyle(
+                                color: AppColors.kRedColor,
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
             ],
           );
         },

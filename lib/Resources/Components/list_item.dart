@@ -186,6 +186,7 @@ class _ListItemState extends State<ListItem> {
                                 ),
                                 if (widget.submiddleFields != null)
                                   TextWidgets.text300(
+                                    maxLines: 2,
                                     title: widget.submiddleFields!.value,
                                     fontSize: 12,
                                     textColor:
@@ -206,7 +207,8 @@ class _ListItemState extends State<ListItem> {
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          if (widget.hasUpdate == true)
+                          if (widget.hasUpdate == true &&
+                              widget.updateIcon != null)
                             GestureDetector(
                               onTap: () {
                                 if (widget.data == null ||
@@ -222,7 +224,8 @@ class _ListItemState extends State<ListItem> {
                             ),
                           if (widget.hasDelete == true)
                             const SizedBox(width: 10),
-                          if (widget.hasDelete == true)
+                          if (widget.hasDelete == true &&
+                              widget.deleteIcon != null)
                             GestureDetector(
                               onTap: () {
                                 if (widget.data == null ||
@@ -315,6 +318,7 @@ class DetailItem extends StatelessWidget {
             if (hasSubtitle == false)
               Flexible(
                 child: TextWidgets.textNormal(
+                  maxLines: 3,
                   title: data?.value ?? "",
                   fontSize: 14,
                   textColor: textColor!,

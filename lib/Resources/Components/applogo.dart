@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:my_lab_app/Resources/Constants/global_variables.dart';
 
 class AppLogo extends StatelessWidget {
   final Size size;
@@ -8,21 +7,21 @@ class AppLogo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CircleAvatar(
-      backgroundColor: AppColors.kPrimaryColor,
-      child: Icon(Icons.person_rounded),
-    );
-    // return Container(
-    //   width: size.width,
-    //   height: size.height,
-    //   padding: EdgeInsets.zero,
-    //   child: ClipRRect(
-    //     borderRadius: BorderRadius.circular(100),
-    //     child: type == 'full'
-    //         ? Image.asset("Assets/Images/full_logo.png")
-    //         : Image.asset("Assets/Images/logo.png"),
-    //   ),
+    // return CircleAvatar(
+    //   backgroundColor: AppColors.kPrimaryColor,
+    //   child: Icon(Icons.person_rounded),
     // );
+    return Container(
+      width: size.width,
+      height: size.height,
+      padding: EdgeInsets.zero,
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(100),
+        child: type == 'full'
+            ? Image.asset("Assets/logo.png")
+            : Image.asset("Assets/logo.png"),
+      ),
+    );
   }
 }
 

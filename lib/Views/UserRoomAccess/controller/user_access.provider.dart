@@ -40,6 +40,9 @@ class UserAccessProvider extends ChangeNotifier {
         title: 'Erreur',
       );
     }
+    data.room = null;
+    data.user = null;
+    data.service = null;
     Response res;
     if (action == EnumActions.update) {
       res = await AppProviders.appProvider.httpPut(
@@ -83,7 +86,10 @@ class UserAccessProvider extends ChangeNotifier {
       callback();
       getOffline(isRefresh: true);
     }
+    // print(jsonEncode(data.toJson()));
     if (res.statusCode == 500) {
+      // print(res.body);
+      // return;
       // LocalDataHelper.saveData(key: keyName, value: data.toJson());
       ToastNotification.showToast(
         msg: ToastNotification.handleErrorMessage(
@@ -158,7 +164,6 @@ class UserAccessProvider extends ChangeNotifier {
     url = '$url?getUser=true&getRoom=true';
     var response = await AppProviders.appProvider.httpGet(url: url);
     List data = [];
-
     if (response.statusCode == 200) {
       data = jsonDecode(response.body)['data'];
     }

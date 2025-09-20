@@ -3,6 +3,11 @@ import 'package:my_lab_app/Resources/Components/texts.dart';
 import 'package:my_lab_app/Resources/Constants/global_variables.dart';
 import 'package:my_lab_app/Resources/Constants/responsive.dart';
 import 'package:my_lab_app/Resources/Providers/menu_provider.dart';
+import 'package:my_lab_app/Resources/Providers/users_provider.dart';
+import 'package:my_lab_app/Views/RoomManager/controller/room_manager.provider.dart';
+import 'package:my_lab_app/Views/Rooms/controller/room.provider.dart';
+import 'package:my_lab_app/Views/Services/controller/service.provider.dart';
+import 'package:my_lab_app/Views/UserRoomAccess/controller/user_access.provider.dart';
 import 'package:my_lab_app/Views/menu.widget.dart';
 import 'package:provider/provider.dart';
 
@@ -18,7 +23,14 @@ class _MainPageState extends State<MainPage> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      context.read<MenuProvider>().initDefaultMenus();
+      await context.read<UserProvider>().getUserData();
+      await context.read<MenuProvider>().initDefaultMenus();
+      await context.read<RoomProvider>().getOffline();
+      await context.read<RoomManagerProvider>().getOffline();
+
+      await context.read<UserAccessProvider>().getOffline();
+      await context.read<ServiceProvider>().getOffline();
+      await context.read<UserProvider>().getOffline();
       setState(() {});
     });
   }
@@ -95,19 +107,19 @@ class AppBarWidget extends StatelessWidget {
       decoration: BoxDecoration(color: AppColors.kPrimaryColor.withOpacity(1)),
       child: Row(
         children: [
-          if (Responsive.isWeb(context) == false)
-            Container(
-              padding: const EdgeInsets.all(8),
-              constraints: const BoxConstraints(maxWidth: 60, maxHeight: 60),
-              decoration: BoxDecoration(color: AppColors.kPrimaryColor),
-              alignment: Alignment.center,
-              child: IconButton(
-                onPressed: () {
-                  _scaffoldKey.currentState!.openDrawer();
-                },
-                icon: Icon(Icons.sort_rounded, color: AppColors.kWhiteColor),
-              ),
+          // if (Responsive.isWeb(context) == false)
+          Container(
+            padding: const EdgeInsets.all(8),
+            constraints: const BoxConstraints(maxWidth: 60, maxHeight: 60),
+            decoration: BoxDecoration(color: AppColors.kPrimaryColor),
+            alignment: Alignment.center,
+            child: IconButton(
+              onPressed: () {
+                _scaffoldKey.currentState!.openDrawer();
+              },
+              icon: Icon(Icons.sort_rounded, color: AppColors.kWhiteColor),
             ),
+          ),
           // const SizedBox(width: 16),
           // const AppLogo(size: Size(80, 50)),
           const SizedBox(width: 8),

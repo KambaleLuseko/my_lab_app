@@ -37,8 +37,9 @@ class _RoomManagerListPageState extends State<RoomManagerListPage> {
                 columns: [
                   "name",
                   "capacite",
-                  "statut",
                   'date',
+                  "statut",
+
                   // "ouverture",
                   // "fermeture",
                 ],
@@ -49,15 +50,13 @@ class _RoomManagerListPageState extends State<RoomManagerListPage> {
                         "name": e.user?.name ?? '',
                         "capacite":
                             '${e.room?.name} - ${e.room?.capacity} personnes',
-                        "date": e.date,
-                        "ouverture": e.startTime ?? '',
-                        "fermeture": e.endTime ?? '',
+                        "date": e.date?.toString() ?? '',
                         "statut": e.status ?? '',
                       },
                     )
                     .toList(),
-                editCallback: (value) {},
-                deleteCallback: (value) {},
+                // editCallback: (value) {},
+                // deleteCallback: (value) {},
               ),
             ),
           ],

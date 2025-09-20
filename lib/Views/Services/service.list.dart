@@ -1,28 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:my_lab_app/Resources/Components/build_table.dart';
-import 'package:my_lab_app/Views/Rooms/controller/room.provider.dart';
-import 'package:my_lab_app/Views/Rooms/model/room.model.dart';
+import 'package:my_lab_app/Views/Services/controller/service.provider.dart';
+import 'package:my_lab_app/Views/Services/model/service.model.dart';
 import 'package:provider/provider.dart';
 
-class RoomListPage extends StatefulWidget {
-  const RoomListPage({super.key});
+class ServiceListPage extends StatefulWidget {
+  const ServiceListPage({super.key});
 
   @override
-  State<RoomListPage> createState() => _RoomListPageState();
+  State<ServiceListPage> createState() => _ServiceListPageState();
 }
 
-class _RoomListPageState extends State<RoomListPage> {
+class _ServiceListPageState extends State<ServiceListPage> {
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      context.read<RoomProvider>().getOffline();
+      context.read<ServiceProvider>().getOffline();
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Selector<RoomProvider, List<RoomModel>>(
+    return Selector<ServiceProvider, List<ServiceModel>>(
       selector: (_, provider) => provider.offlineData,
       builder: (_, data, __) {
         return Column(
@@ -30,22 +30,16 @@ class _RoomListPageState extends State<RoomListPage> {
             Flexible(
               child: BuildTable.generateTable(
                 icon: Icons.person_3_rounded,
-                columns: [
-                  "name",
-                  "capacite",
-                  "statut",
-                  "ouverture",
-                  "fermeture",
-                ],
+                columns: ["name", "salle", "capacite", "overture", "fermeture"],
                 rows: data
                     .map(
                       (e) => {
                         ...e.toJson(),
                         "name": e.name,
-                        "capacite": '${e.capacity} personnes',
-                        "ouverture": e.openedAt,
-                        "fermeture": e.closedAt,
-                        "statut": e.status ?? '',
+                        "capacite": '${e.room?.capacity ?? 0} pers',
+                        "salle": e.room?.name,
+                        "overture": e.room?.openedAt,
+                        "fermeture": e.room?.closedAt,
                       },
                     )
                     .toList(),

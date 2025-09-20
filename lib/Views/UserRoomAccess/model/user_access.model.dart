@@ -1,5 +1,6 @@
 import 'package:my_lab_app/Resources/Models/user.model.dart';
 import 'package:my_lab_app/Views/Rooms/model/room.model.dart';
+import 'package:my_lab_app/Views/Services/model/service.model.dart';
 
 class UserAccessModel {
   int? id;
@@ -10,6 +11,8 @@ class UserAccessModel {
   String? startTime;
   String? endTime;
   String? status;
+  String? serviceUuid;
+  ServiceModel? service;
   String? createdAt;
   String? updatedAt;
   UserModel? user;
@@ -39,10 +42,14 @@ class UserAccessModel {
     startTime = json['start_time'];
     endTime = json['end_time'];
     status = json['status'];
+    serviceUuid = json['service_uuid'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
     user = json['user'] != null ? UserModel.fromJson(json['user']) : null;
     room = json['room'] != null ? RoomModel.fromJson(json['room']) : null;
+    service = json['service'] != null
+        ? ServiceModel.fromJson(json['service'])
+        : null;
   }
 
   Map toJson() {
@@ -55,6 +62,7 @@ class UserAccessModel {
     data['start_time'] = startTime;
     data['end_time'] = endTime;
     data['status'] = status;
+    data['service_uuid'] = serviceUuid;
     data['created_at'] = createdAt;
     data['updated_at'] = updatedAt;
     if (user != null) {
@@ -63,6 +71,7 @@ class UserAccessModel {
     if (room != null) {
       data['room'] = room!.toJson();
     }
+    data['service'] = service?.toJson();
     data.removeWhere(
       (key, value) => value == null || (value?.toString() ?? '').isEmpty,
     );

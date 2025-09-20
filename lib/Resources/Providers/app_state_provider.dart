@@ -51,11 +51,16 @@ class AppStateProvider extends ChangeNotifier {
     // debugPrint(jsonEncode(body));
     // print("post $url");
     // print(headers);
+    Map<String, String> headersData = headers;
+    if (url.contains('login')) {
+      headersData.remove('Authorization');
+      print(headersData);
+    }
     try {
       // print('changing state');
       changeAppState();
       Response response = await http
-          .post(Uri.parse(url), body: (body), headers: headers)
+          .post(Uri.parse(url), body: (body), headers: headersData)
           .timeout(Duration(seconds: timeOut));
       changeAppState();
       // print('changing state');

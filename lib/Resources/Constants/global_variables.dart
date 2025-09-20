@@ -41,10 +41,10 @@ class AppColors {
 class BaseUrl {
   static String appName = "Smart Delivery";
   static String appContact = "+243 000 000 000";
-  static String ip = "http://127.0.0.1:8000/api";
-  // static String ip = "http://192.168.1.250:3000";
+  // static String ip = "http://127.0.0.1:8000/api";
+  // static String ip = "http://192.168.1.64:8500";
   // static String ip = "https://smart-delivery-api.onrender.com";
-  // static String ip = "http://167.86.68.113:3000"; //IP
+  static String ip = "https://mylabunigom.com/api/my_lab_api/public/api"; //IP
   static String apiUrl = ip;
   // static String graphqlEndpoint = "$apiUrl/graphql";
   // static String getLogin = '$apiUrl/user/login/';
@@ -55,6 +55,7 @@ class BaseUrl {
   static String rooms = '$apiUrl/salles';
   static String roomManagers = '$apiUrl/room-manager';
   static String userAccessRooms = '$apiUrl/user-room-access';
+  static String services = '$apiUrl/services';
 
   ///
   static String stats = '$apiUrl/stats/';

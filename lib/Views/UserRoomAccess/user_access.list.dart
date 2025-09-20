@@ -37,7 +37,7 @@ class _UserAccessRoomListPageState extends State<UserAccessRoomListPage> {
             Flexible(
               child: BuildTable.generateTable(
                 icon: Icons.door_sliding_outlined,
-                columns: ["name", "salle", "status", 'date', "debut", "fin"],
+                columns: ["name", "salle", "statut", 'date', "debut", "fin"],
 
                 rows: data
                     .map(
@@ -45,7 +45,7 @@ class _UserAccessRoomListPageState extends State<UserAccessRoomListPage> {
                         ...e.toJson(),
                         "name": e.user?.name ?? '',
                         "salle":
-                            '${e.room?.name} (${e.room?.capacity} personnes)',
+                            '${e.room?.name} (${e.startTime ?? ''}-${e.endTime ?? ''})',
                         "date": e.date,
                         "debut": e.startTime ?? '',
                         "fin": e.endTime ?? '',

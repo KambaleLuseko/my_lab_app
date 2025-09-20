@@ -2,11 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:my_lab_app/Resources/Components/build_table.dart';
 import 'package:provider/provider.dart';
 
-import '../../Resources/Components/dialogs.dart';
-import '../../Resources/Constants/enums.dart';
 import '../../Resources/Models/user.model.dart';
 import '../../Resources/Providers/users_provider.dart';
-import 'add_user.page.dart';
 
 class UsersListPage extends StatefulWidget {
   const UsersListPage({super.key});
@@ -179,19 +176,19 @@ class _UsersListPageState extends State<UsersListPage> {
                       },
                     )
                     .toList(),
-                editCallback: (value) {
-                  Dialogs.showModal(
-                    child: AddUserPage(
-                      action: EnumActions.update,
-                      data: UserModel.fromJson(value),
-                    ),
-                  );
-                },
-                deleteCallback: (value) {
-                  context.read<UserProvider>().delete(
-                    data: UserModel.fromJson(value),
-                  );
-                },
+                // editCallback: (value) {
+                //   Dialogs.showModal(
+                //     child: AddUserPage(
+                //       action: EnumActions.update,
+                //       data: UserModel.fromJson(value),
+                //     ),
+                //   );
+                // },
+                // deleteCallback: (value) {
+                //   context.read<UserProvider>().delete(
+                //     data: UserModel.fromJson(value),
+                //   );
+                // },
               ),
             ),
           ],
