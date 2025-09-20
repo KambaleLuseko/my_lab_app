@@ -56,6 +56,7 @@ class _ParentPageState extends State<ParentPage> {
                     }
                     if (widget.newItem != null) {
                       Dialogs.showModal(
+                        hasScroll: true,
                         child: widget.newItem!,
                         title: widget.title,
                       );

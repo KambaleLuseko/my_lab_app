@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_lab_app/Resources/Components/texts.dart';
+import 'package:my_lab_app/Resources/Constants/enums.dart';
 import 'package:my_lab_app/Resources/Constants/global_variables.dart';
 import 'package:my_lab_app/Resources/Constants/responsive.dart';
 import 'package:my_lab_app/Resources/Providers/menu_provider.dart';
@@ -32,6 +33,10 @@ class _MainPageState extends State<MainPage> {
       await context.read<ServiceProvider>().getOffline();
       await context.read<UserProvider>().getOffline();
       setState(() {});
+      ToastNotification.showToast(
+        msg: "Chargement des données terminé",
+        msgType: MessageType.success,
+      );
     });
   }
 
@@ -50,12 +55,13 @@ class _MainPageState extends State<MainPage> {
       body: SafeArea(
         child: Row(
           children: [
-            // if (Responsive.isWeb(context))
-            //   Container(
-            //       width: 50,
-            //       padding: const EdgeInsets.all(0),
-            //       child: const MenuWidget()),
-            // if (Responsive.isWeb(context)) const SizedBox(width: 8),
+            if (Responsive.isWeb(context))
+              Container(
+                width: 250,
+                padding: const EdgeInsets.all(0),
+                child: const MenuWidget(),
+              ),
+            if (Responsive.isWeb(context)) const SizedBox(width: 8),
             Expanded(
               child: Stack(
                 children: [
@@ -107,19 +113,19 @@ class AppBarWidget extends StatelessWidget {
       decoration: BoxDecoration(color: AppColors.kPrimaryColor.withOpacity(1)),
       child: Row(
         children: [
-          // if (Responsive.isWeb(context) == false)
-          Container(
-            padding: const EdgeInsets.all(8),
-            constraints: const BoxConstraints(maxWidth: 60, maxHeight: 60),
-            decoration: BoxDecoration(color: AppColors.kPrimaryColor),
-            alignment: Alignment.center,
-            child: IconButton(
-              onPressed: () {
-                _scaffoldKey.currentState!.openDrawer();
-              },
-              icon: Icon(Icons.sort_rounded, color: AppColors.kWhiteColor),
+          if (Responsive.isWeb(context) == false)
+            Container(
+              padding: const EdgeInsets.all(8),
+              constraints: const BoxConstraints(maxWidth: 60, maxHeight: 60),
+              decoration: BoxDecoration(color: AppColors.kPrimaryColor),
+              alignment: Alignment.center,
+              child: IconButton(
+                onPressed: () {
+                  _scaffoldKey.currentState!.openDrawer();
+                },
+                icon: Icon(Icons.sort_rounded, color: AppColors.kWhiteColor),
+              ),
             ),
-          ),
           // const SizedBox(width: 16),
           // const AppLogo(size: Size(80, 50)),
           const SizedBox(width: 8),

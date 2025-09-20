@@ -50,7 +50,7 @@ class _MenuWidgetState extends State<MenuWidget> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const SizedBox(height: 40),
+                          // const SizedBox(height: 40),
                           AppLogo(size: Size(180, 120)),
                           // Container(
                           //   width: 60,
@@ -124,15 +124,11 @@ class _MenuWidgetState extends State<MenuWidget> {
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        !Responsive.isWeb(context)
-                            ? Icon(
-                                Icons.exit_to_app_sharp,
-                                color: AppColors.kRedColor,
-                              )
-                            : Container(),
-                        !Responsive.isWeb(context)
-                            ? const SizedBox(width: 16.0)
-                            : Container(),
+                        Icon(
+                          Icons.exit_to_app_sharp,
+                          color: AppColors.kRedColor,
+                        ),
+                        const SizedBox(width: 16.0),
                         Expanded(
                           child: Container(
                             padding: EdgeInsets.zero,
@@ -212,19 +208,15 @@ class _MenuItemState extends State<MenuItem> {
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        !Responsive.isWeb(context)
-                            ? Icon(
-                                widget.menu.icon,
-                                color:
-                                    menuStateProvider.activePage.title ==
-                                        widget.menu.title
-                                    ? AppColors.kBlackColor
-                                    : AppColors.kBlackColor,
-                              )
-                            : Container(),
-                        !Responsive.isWeb(context)
-                            ? const SizedBox(width: 16.0)
-                            : Container(),
+                        Icon(
+                          widget.menu.icon,
+                          color:
+                              menuStateProvider.activePage.title ==
+                                  widget.menu.title
+                              ? AppColors.kBlackColor
+                              : AppColors.kBlackColor,
+                        ),
+                        const SizedBox(width: 16.0),
                         Container(
                           padding: EdgeInsets.zero,
                           child: Text(

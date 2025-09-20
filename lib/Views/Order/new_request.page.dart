@@ -66,10 +66,10 @@ class _ClientRoomAccessRequestState extends State<ClientRoomAccessRequest> {
   Widget build(BuildContext context) {
     return Scaffold(
       // backgroundColor: AppColors.kScaffoldColor,
-      appBar: AppBar(
-        backgroundColor: AppColors.kWhiteColor,
-        title: Text("Nouvelle demande"),
-      ),
+      // appBar: AppBar(
+      //   backgroundColor: AppColors.kWhiteColor,
+      //   title: Text("Nouvelle demande"),
+      // ),
       body: Column(
         children: [
           Expanded(

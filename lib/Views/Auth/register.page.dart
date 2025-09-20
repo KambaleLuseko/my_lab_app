@@ -5,6 +5,7 @@ import 'package:my_lab_app/Resources/Components/dropdown_button.dart';
 import 'package:my_lab_app/Resources/Components/text_fields.dart';
 import 'package:my_lab_app/Resources/Constants/app_providers.dart';
 import 'package:my_lab_app/Resources/Constants/global_variables.dart';
+import 'package:my_lab_app/Resources/Constants/responsive.dart';
 import 'package:my_lab_app/Resources/Models/user.model.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -38,7 +39,8 @@ class _RegisterPageState extends State<RegisterPage> {
           ),
         ),
         child: Center(
-          child: Padding(
+          child: Container(
+            width: Responsive.isMobile(context) ? double.maxFinite : 600,
             padding: EdgeInsets.all(24.0),
             child: SingleChildScrollView(
               child: Column(

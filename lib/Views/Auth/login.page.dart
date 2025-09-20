@@ -4,6 +4,7 @@ import 'package:my_lab_app/Resources/Components/button.dart';
 import 'package:my_lab_app/Resources/Components/text_fields.dart';
 import 'package:my_lab_app/Resources/Constants/global_variables.dart';
 import 'package:my_lab_app/Resources/Constants/navigators.dart';
+import 'package:my_lab_app/Resources/Constants/responsive.dart';
 import 'package:my_lab_app/Resources/Providers/users_provider.dart';
 import 'package:my_lab_app/Views/Auth/register.page.dart';
 import 'package:my_lab_app/Views/main.page.dart';
@@ -37,7 +38,8 @@ class _LoginPageState extends State<LoginPage> {
           ),
         ),
         child: Center(
-          child: Padding(
+          child: Container(
+            width: Responsive.isMobile(context) ? double.maxFinite : 600,
             padding: EdgeInsets.all(24.0),
             child: SingleChildScrollView(
               child: Column(
