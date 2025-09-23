@@ -127,7 +127,6 @@ class RoomProvider extends ChangeNotifier {
       get(isRefresh: isRefresh);
       return;
     }
-    // print(data.length);
     offlineData = List<RoomModel>.from(
       data.map((item) => RoomModel.fromJson(item)).toList(),
     );

@@ -90,7 +90,11 @@ class AuthModel {
     return AuthModel(
       user: UserModel.fromJson(json['user']),
       token: json['token'],
-      roomManager: json['roomAccess'],
+      roomManager: json['roomAccess'] is RoomManagerModel
+          ? json['roomAccess']
+          : json['roomAccess'] == null
+          ? null
+          : RoomManagerModel.fromJson(json['roomAccess']),
     );
   }
 

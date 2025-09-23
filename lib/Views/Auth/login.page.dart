@@ -115,6 +115,7 @@ class _LoginPageState extends State<LoginPage> {
       textColor: AppColors.kBlackColor,
       backColor: AppColors.kTextFormBackColor,
       editCtrller: _passwordController,
+      inputType: TextInputType.visiblePassword,
       isObsCured: true,
     );
   }

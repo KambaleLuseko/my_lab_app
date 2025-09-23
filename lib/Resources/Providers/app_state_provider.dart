@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
+import 'package:my_lab_app/Resources/Constants/enums.dart';
 import 'package:my_lab_app/Resources/Constants/global_variables.dart';
 import 'package:my_lab_app/Resources/Providers/users_provider.dart';
 import 'package:my_lab_app/main.dart';
@@ -63,7 +64,22 @@ class AppStateProvider extends ChangeNotifier {
           .post(Uri.parse(url), body: (body), headers: headersData)
           .timeout(Duration(seconds: timeOut));
       changeAppState();
+      // print(response.body);
       // print('changing state');
+      if (response.statusCode == 401) {
+        navKey.currentContext?.read<UserProvider>().logOut();
+        ToastNotification.showToast(
+          msg: "Veuillez vous reconnecter car votre session a expirée",
+          msgType: MessageType.error,
+        );
+        return Response(
+          jsonEncode({
+            'data': [],
+            'message': "Veuillez vous reconnecter car votre session a expirée",
+          }),
+          401,
+        );
+      }
       return response;
     } on TimeoutException {
       isApiReachable = false;
@@ -89,6 +105,10 @@ class AppStateProvider extends ChangeNotifier {
       print(error.toString());
       isApiReachable = false;
       changeAppState();
+      ToastNotification.showToast(
+        msg: "Echec de connexion, veuillez réessayer",
+        msgType: MessageType.error,
+      );
       return Response(
         jsonEncode({
           'data': [],
@@ -238,7 +258,21 @@ class AppStateProvider extends ChangeNotifier {
           .get(Uri.parse(url), headers: headers)
           .timeout(Duration(seconds: timeOut));
       changeAppState();
-      // print(response.body);
+      // print(response.statusCode);
+      if (response.statusCode == 401) {
+        navKey.currentContext?.read<UserProvider>().logOut();
+        ToastNotification.showToast(
+          msg: "Veuillez vous reconnecter car votre session a expirée",
+          msgType: MessageType.error,
+        );
+        return Response(
+          jsonEncode({
+            'data': [],
+            'message': "Veuillez vous reconnecter car votre session a expirée",
+          }),
+          401,
+        );
+      }
       return response;
     } on TimeoutException {
       isApiReachable = false;

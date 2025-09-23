@@ -72,7 +72,7 @@ class RoomManagerModel {
     if (user != null) {
       data['user'] = user!.toJson();
     }
-    data['services'] = services?.map((e) => e.toJson()).toList() ?? [];
+    data['services'] = services?.map((e) => e.toJson()).toList();
     data.removeWhere(
       (key, value) => value == null || (value?.toString() ?? '').isEmpty,
     );

@@ -43,6 +43,8 @@ class UserAccessProvider extends ChangeNotifier {
     data.room = null;
     data.user = null;
     data.service = null;
+    // print(data.toJson());
+    // return;
     Response res;
     if (action == EnumActions.update) {
       res = await AppProviders.appProvider.httpPut(
@@ -166,12 +168,15 @@ class UserAccessProvider extends ChangeNotifier {
     List data = [];
     if (response.statusCode == 200) {
       data = jsonDecode(response.body)['data'];
+    } else {
+      // print(response.body);
     }
     if (data.isEmpty) {
       offlineData = [];
       notifyListeners();
       return;
     }
+    // print(response.body);
     List<UserAccessModel> dataList = List<UserAccessModel>.from(
       data.map((item) {
         UserAccessModel singleItem = UserAccessModel.fromJson(item);

@@ -56,6 +56,7 @@ class _AddRoomManagerPageState extends State<AddRoomManagerPage> {
             data: context
                 .read<UserProvider>()
                 .offlineData
+                .where((e) => e.role?.toLowerCase() == 'agent')
                 .map((e) => e.toJson())
                 .toList(),
             callback: (item) {
@@ -204,9 +205,10 @@ class _ItemSelectorWidgetState extends State<ItemSelectorWidget> {
         child: ListItem(
           icon: widget.icon,
           title: selectedItem?[widget.displayColumn] ?? widget.title,
-          subtitle:
-              selectedItem?[widget.secondaryColumn] ??
-              'Choisissez un.e ${widget.title.toLowerCase()}',
+          subtitle: selectedItem != null
+              ? (selectedItem?[widget.secondaryColumn] ?? '') +
+                    " ${(widget.metric ?? "")}"
+              : 'Choisissez un.e ${widget.title.toLowerCase()}',
           backColor: AppColors.kTextFormBackColor,
           textColor: AppColors.kBlackColor,
           detailsFields: [],

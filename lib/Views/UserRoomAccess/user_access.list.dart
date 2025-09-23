@@ -37,7 +37,15 @@ class _UserAccessRoomListPageState extends State<UserAccessRoomListPage> {
             Flexible(
               child: BuildTable.generateTable(
                 icon: Icons.door_sliding_outlined,
-                columns: ["name", "salle", "statut", 'date', "debut", "fin"],
+                columns: [
+                  "name",
+                  "salle",
+                  "statut",
+                  'services',
+                  'date',
+                  "debut",
+                  "fin",
+                ],
 
                 rows: data
                     .map(
@@ -50,6 +58,7 @@ class _UserAccessRoomListPageState extends State<UserAccessRoomListPage> {
                         "debut": e.startTime ?? '',
                         "fin": e.endTime ?? '',
                         "statut": e.status ?? '',
+                        "services": e.service?.name ?? '',
                       },
                     )
                     .toList(),
@@ -58,7 +67,7 @@ class _UserAccessRoomListPageState extends State<UserAccessRoomListPage> {
                   if (item.status?.toLowerCase().trim() != 'pending') {
                     Dialogs.showDialogNoAction(
                       title: "Information",
-                      content: "Cette demande a déjà etait approuvée",
+                      content: "Cette demande a déjà etait traitée",
                     );
                     return;
                   }

@@ -37,6 +37,11 @@ class RoomManagerProvider extends ChangeNotifier {
     //     title: 'Erreur',
     //   );
     // }
+    data
+      ..services = null
+      ..room = null
+      ..user = null;
+    print(data.toJson());
     Response res;
     if (action == EnumActions.update) {
       res = await AppProviders.appProvider.httpPut(

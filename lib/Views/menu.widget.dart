@@ -115,7 +115,7 @@ class _MenuWidgetState extends State<MenuWidget> {
               ),
               GestureDetector(
                 onTap: () {
-                  context.read<UserProvider>().logOut(password: '1234');
+                  context.read<UserProvider>().logOut();
                 },
                 child: Container(
                   decoration: BoxDecoration(color: AppColors.kWhiteColor),

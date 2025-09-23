@@ -31,6 +31,8 @@ class UserAccessModel {
     this.updatedAt,
     this.user,
     this.room,
+    this.service,
+    this.serviceUuid,
   });
 
   UserAccessModel.fromJson(Map json) {

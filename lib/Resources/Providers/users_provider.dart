@@ -263,11 +263,19 @@ class UserProvider extends ChangeNotifier {
     }
     // print(res.statusCode);
     // print(res.body);
-    ToastNotification.showToast(
-      msg: jsonDecode(res.body)['message'],
-      msgType: MessageType.error,
-      title: "Error",
-    );
+    try {
+      ToastNotification.showToast(
+        msg: jsonDecode(res.body)['message'],
+        msgType: MessageType.error,
+        title: "Error",
+      );
+    } catch (e) {
+      ToastNotification.showToast(
+        msg: "Erreur du serveur, Veuillez réessayer",
+        msgType: MessageType.error,
+        title: "Error",
+      );
+    }
   }
 
   refreshUserData() async {
@@ -332,7 +340,7 @@ class UserProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  logOut({required String password}) async {
+  logOut() async {
     prefs.clear();
     offlineData.clear();
 

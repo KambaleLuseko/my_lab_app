@@ -14,6 +14,7 @@ import 'package:my_lab_app/Views/RoomManager/controller/room_manager.provider.da
 import 'package:my_lab_app/Views/RoomManager/model/room_manager.model.dart';
 import 'package:my_lab_app/Views/Rooms/controller/room.provider.dart';
 import 'package:my_lab_app/Views/Rooms/model/room.model.dart';
+import 'package:my_lab_app/Views/Services/model/service.model.dart';
 import 'package:my_lab_app/Views/UserRoomAccess/controller/user_access.provider.dart';
 import 'package:my_lab_app/Views/UserRoomAccess/model/user_access.model.dart';
 import 'package:provider/provider.dart';
@@ -26,9 +27,20 @@ class AddUserAccessRoomP extends StatefulWidget {
 }
 
 class Add_UserAccessRoomPState extends State<AddUserAccessRoomP> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<UserProvider>().getOffline(isRefresh: true);
+      context.read<RoomProvider>().getOffline(isRefresh: true);
+      context.read<RoomManagerProvider>().getOffline(isRefresh: true);
+    });
+  }
+
   UserModel? user;
   RoomModel? room;
   RoomManagerModel? roomManager;
+  ServiceModel? service;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,6 +62,11 @@ class Add_UserAccessRoomPState extends State<AddUserAccessRoomP> {
             data: context
                 .read<UserProvider>()
                 .offlineData
+                .where(
+                  (e) =>
+                      e.role?.toLowerCase() == 'etudiant' ||
+                      e.role?.toLowerCase() == 'visiteur',
+                )
                 .map((e) => e.toJson())
                 .toList(),
             callback: (item) {
@@ -90,6 +107,7 @@ class Add_UserAccessRoomPState extends State<AddUserAccessRoomP> {
                   .toList()
                   .map(
                     (e) => {
+                      ...e.toJson(),
                       'manager': e.user?.name ?? '',
                       'dateEvent': parseDate(
                         date: e.date ?? '',
@@ -106,6 +124,23 @@ class Add_UserAccessRoomPState extends State<AddUserAccessRoomP> {
               callback: (item) {
                 setState(() {
                   roomManager = RoomManagerModel.fromJson(item);
+                });
+              },
+            ),
+          if (roomManager != null)
+            ItemSelectorWidget(
+              icon: Icons.category_rounded,
+              displayColumn: 'name',
+              secondaryColumn: 'description',
+              // metric: 'personnes',
+              title: 'Service',
+              data: roomManager!.services!
+                  .toList()
+                  .map((e) => e.toJson())
+                  .toList(),
+              callback: (item) {
+                setState(() {
+                  service = ServiceModel.fromJson(item);
                 });
               },
             ),
@@ -217,6 +252,12 @@ class Add_UserAccessRoomPState extends State<AddUserAccessRoomP> {
                             value: room?.name ?? '',
                           ),
                           TextWidgets.textHorizontalWithLabel(
+                            title: "Service",
+                            fontSize: 14,
+                            textColor: AppColors.kBlackColor,
+                            value: service?.name ?? '',
+                          ),
+                          TextWidgets.textHorizontalWithLabel(
                             title: "Gestionnaire",
                             fontSize: 14,
                             textColor: AppColors.kBlackColor,
@@ -250,6 +291,7 @@ class Add_UserAccessRoomPState extends State<AddUserAccessRoomP> {
                                 startTime: _openedAtController.text.trim(),
                                 endTime: _closedAtController.text.trim(),
                                 status: 'Pending',
+                                serviceUuid: service?.uuid,
                               );
                               Navigator.pop(context);
                               context.read<UserAccessProvider>().save(
@@ -265,11 +307,6 @@ class Add_UserAccessRoomPState extends State<AddUserAccessRoomP> {
                     ),
                   ],
                 ),
-              );
-              UserAccessModel data = UserAccessModel(
-                userUuid: user?.uuid,
-                roomUuid: roomManager?.roomUuid,
-                date: roomManager?.date,
               );
             },
           ),

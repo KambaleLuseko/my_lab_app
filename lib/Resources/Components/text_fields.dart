@@ -22,7 +22,7 @@ class TextFormFieldWidget extends StatefulWidget {
     required this.backColor,
     this.editCtrller,
     this.labelText,
-    this.inputType,
+    this.inputType = TextInputType.text,
     this.maxLength,
     this.maxLines = 1,
     this.isEnabled,
@@ -68,10 +68,9 @@ class _TextFormFieldWidgetState extends State<TextFormFieldWidget> {
       child: Container(
         padding: const EdgeInsets.all(2),
         decoration: BoxDecoration(
-          color:
-              focusNode.hasFocus
-                  ? widget.textColor.withAlpha(32)
-                  : widget.backColor,
+          color: focusNode.hasFocus
+              ? widget.textColor.withAlpha(32)
+              : widget.backColor,
           borderRadius: BorderRadius.circular(8),
         ),
         child: Stack(
@@ -81,12 +80,11 @@ class _TextFormFieldWidgetState extends State<TextFormFieldWidget> {
               child: TextFormField(
                 validator: widget.validator,
                 enabled: widget.isEnabled != null ? widget.isEnabled! : true,
-                obscureText:
-                    widget.isObsCured == false
-                        ? false
-                        : showPassword == true
-                        ? false
-                        : true,
+                obscureText: widget.isObsCured == false
+                    ? false
+                    : showPassword == true
+                    ? false
+                    : true,
                 maxLines: widget.maxLines,
                 focusNode: focusNode,
                 style: TextStyle(color: widget.textColor),
@@ -94,11 +92,13 @@ class _TextFormFieldWidgetState extends State<TextFormFieldWidget> {
                 controller: widget.editCtrller,
                 keyboardType: widget.inputType,
                 textCapitalization:
-                    widget.inputType == TextInputType.emailAddress
-                        ? TextCapitalization.none
-                        : widget.inputType == TextInputType.streetAddress
-                        ? TextCapitalization.words
-                        : TextCapitalization.sentences,
+                    widget.inputType == TextInputType.emailAddress ||
+                        widget.inputType == TextInputType.visiblePassword ||
+                        widget.inputType == TextInputType.none
+                    ? TextCapitalization.none
+                    : widget.inputType == TextInputType.streetAddress
+                    ? TextCapitalization.words
+                    : TextCapitalization.sentences,
                 decoration: InputDecoration(
                   contentPadding: const EdgeInsets.symmetric(horizontal: 8),
                   hintText: widget.hintText,
@@ -111,33 +111,30 @@ class _TextFormFieldWidgetState extends State<TextFormFieldWidget> {
                     fontSize: 12,
                     textColor: widget.textColor.withOpacity(1),
                   ),
-                  enabledBorder:
-                      widget.isBordered == true
-                          ? OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: widget.textColor.withOpacity(0.2),
-                              width: 1,
-                            ),
-                          )
-                          : InputBorder.none,
-                  border:
-                      widget.isBordered == true
-                          ? OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: widget.textColor,
-                              width: 1,
-                            ),
-                          )
-                          : InputBorder.none,
-                  focusedBorder:
-                      widget.isBordered == true
-                          ? OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: widget.textColor,
-                              width: 1,
-                            ),
-                          )
-                          : InputBorder.none,
+                  enabledBorder: widget.isBordered == true
+                      ? OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: widget.textColor.withOpacity(0.2),
+                            width: 1,
+                          ),
+                        )
+                      : InputBorder.none,
+                  border: widget.isBordered == true
+                      ? OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: widget.textColor,
+                            width: 1,
+                          ),
+                        )
+                      : InputBorder.none,
+                  focusedBorder: widget.isBordered == true
+                      ? OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: widget.textColor,
+                            width: 1,
+                          ),
+                        )
+                      : InputBorder.none,
                   // hintText: widget.hintText,
                   // hintStyle:
                   //     TextStyle(color: widget.textColor.withOpacity(0.5))
