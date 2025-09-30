@@ -30,7 +30,11 @@ class UserAccessRoomPage extends StatelessWidget {
           msgType: MessageType.success,
         );
       },
-      newItem: AddUserAccessRoomP(),
+      newItem:
+          UserProvider.role == UserRolesEnum.admin ||
+              UserProvider.role == UserRolesEnum.agent
+          ? AddUserAccessRoomP()
+          : null,
       listWidget: UserAccessRoomListPage(),
     );
   }

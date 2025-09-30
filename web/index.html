@@ -31,8 +31,42 @@
 
   <title>my_lab_app</title>
   <link rel="manifest" href="manifest.json">
+  <style>
+    /* HTML: <div class="loader"></div> */
+    .loading {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      align-items: center;
+      justify-content: center;
+      margin: auto;
+
+      
+    }
+    .loader {
+      width: 80px;
+      height: 20px;
+      color: #0e35a0;
+      position: absolute;
+      margin: 40%;
+
+      background:
+        radial-gradient(farthest-side,currentColor 98%,#0000) left  /20px 20px,
+        radial-gradient(farthest-side,currentColor 98%,#0000) right /20px 20px,
+        radial-gradient(farthest-side,#000 98%,#0000) center/5px 5px,
+        linear-gradient(currentColor 0 0) center/100% 2px;
+      background-repeat: no-repeat;
+      animation: l9 1s cubic-bezier(.5,-150,.5,150) infinite;
+    }
+    @keyframes l9 { 
+        100% { transform:rotate(1deg)} 
+    }
+  </style>
 </head>
 <body>
+  <div class="loading">
+    <div class="loader"></div>
+  </div>
   <script src="flutter_bootstrap.js" async></script>
 </body>
 </html>
