@@ -73,6 +73,7 @@ class ServiceProvider extends ChangeNotifier {
       return;
     }
     if (res.statusCode == 500) {
+      print(res.body);
       // LocalDataHelper.saveData(key: keyName, value: data.toJson());
       ToastNotification.showToast(
         msg: jsonDecode(res.body)['message'] ?? 'Une erreur est survenue',
