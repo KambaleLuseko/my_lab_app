@@ -53,10 +53,10 @@ class AppStateProvider extends ChangeNotifier {
     // print("post $url");
     // print(headers);
     Map<String, String> headersData = headers;
-    if (url.contains('login')) {
-      headersData.remove('Authorization');
-      print(headersData);
-    }
+    // if (url.contains('login')) {
+    //   headersData.remove('Authorization');
+    //   // print(headersData);
+    // }
     try {
       // print('changing state');
       changeAppState();
@@ -66,7 +66,7 @@ class AppStateProvider extends ChangeNotifier {
       changeAppState();
       // print(response.body);
       // print('changing state');
-      if (response.statusCode == 401) {
+      if (response.statusCode == 401 && prefs.getString('loggedUser') != null) {
         navKey.currentContext?.read<UserProvider>().logOut();
         ToastNotification.showToast(
           msg: "Veuillez vous reconnecter car votre session a expirée",

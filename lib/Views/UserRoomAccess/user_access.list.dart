@@ -74,7 +74,7 @@ class _UserAccessRoomListPageState extends State<UserAccessRoomListPage> {
                   Dialogs.showDialogWithAction(
                     title: "Confirmation",
                     content:
-                        "Vous allez approuver l'acces de ${item.user?.name} à la salle ${item.room?.name}.\nCliquez pour confirmer",
+                        "Vous allez approuver l'acces de ${item.user?.name} au labo ${item.room?.name}.\nCliquez pour confirmer",
                     callback: () {
                       context.read<UserAccessProvider>().approveRequest(
                         data: [item],

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_lab_app/Views/Services/add_service.page.dart';
 import 'package:my_lab_app/Views/Services/controller/service.provider.dart';
 import 'package:my_lab_app/Views/Services/service.list.dart';
 import 'package:my_lab_app/Views/parent_page.dart';
@@ -15,6 +16,7 @@ class ServicePage extends StatelessWidget {
       callback: () {
         context.read<ServiceProvider>().get(isRefresh: true);
       },
+      newItem: AddServicePage(),
     );
   }
 }

@@ -20,7 +20,8 @@ class ServiceProvider extends ChangeNotifier {
     EnumActions? action = EnumActions.save,
     required Function callback,
   }) async {
-    if (data.name!.isEmpty || data.sallesId! <= 0) {
+    if (data.name!.isEmpty || data.sallesId == null || data.sallesId! <= 0) {
+      // print(data.toJson());
       ToastNotification.showToast(
         msg: "Veuillez remplir tous les champs",
         msgType: MessageType.error,
@@ -28,23 +29,24 @@ class ServiceProvider extends ChangeNotifier {
       );
       return;
     }
-
+    Map body = data.toJson();
+    body.remove('room');
     Response res;
     if (action == EnumActions.update) {
       res = await AppProviders.appProvider.httpPut(
         url: "${BaseUrl.services}/${data.id}",
-        body: data.toJson(),
+        body: body,
       );
     } else {
       res = await AppProviders.appProvider.httpPost(
         url: BaseUrl.services,
-        body: data.toJson(),
+        body: body,
       );
     }
     if (res.statusCode == 200 || res.statusCode == 201) {
       if (action == EnumActions.update) {
         ToastNotification.showToast(
-          msg: "Utilisateur modifié avec succès",
+          msg: "Information modifiée avec succès",
           msgType: MessageType.success,
           title: "Success",
         );
@@ -57,14 +59,18 @@ class ServiceProvider extends ChangeNotifier {
       }
 
       ServiceModel savedData = ServiceModel.fromJson(jsonDecode(res.body));
+      savedData.room = data.room;
       LocalDataHelper.saveData(key: keyName, value: savedData.toJson());
       ToastNotification.showToast(
-        msg: jsonDecode(res.body)['message'] ?? "Salle ajoutée avec succès",
+        msg:
+            jsonDecode(res.body)['message'] ??
+            "Information ajoutée avec succès",
         msgType: MessageType.success,
         title: "Success",
       );
       callback();
       getOffline(isRefresh: true);
+      return;
     }
     if (res.statusCode == 500) {
       // LocalDataHelper.saveData(key: keyName, value: data.toJson());

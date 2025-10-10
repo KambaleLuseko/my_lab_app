@@ -26,7 +26,7 @@ class ServiceModel {
     uuid = json['uuid'];
     name = json['name'];
     description = json['description'];
-    sallesId = json['salles_id'];
+    sallesId = int.tryParse(json['salles_id'].toString());
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
     room = json['room'] != null ? RoomModel.fromJson(json['room']) : null;
@@ -38,12 +38,13 @@ class ServiceModel {
     data['uuid'] = uuid;
     data['name'] = name;
     data['description'] = description;
-    data['salles_id'] = sallesId;
+    data['salles_id'] = sallesId?.toString();
     data['created_at'] = createdAt;
     data['updated_at'] = updatedAt;
     if (room != null) {
       data['room'] = room!.toJson();
     }
+    data.removeWhere((key, value) => value == null || value.toString().isEmpty);
     return data;
   }
 }

@@ -116,7 +116,7 @@ class _ClientRoomAccessRequestState extends State<ClientRoomAccessRequest> {
                         if (currentPage == 0) {
                           if (room == null || service == null) {
                             ToastNotification.showToast(
-                              msg: "Veuillez choisir la salle et le service",
+                              msg: "Veuillez choisir le labo et le service",
                               msgType: MessageType.error,
                               title: 'Données invalides',
                             );
@@ -183,7 +183,7 @@ class _ClientRoomAccessRequestState extends State<ClientRoomAccessRequest> {
                           )) {
                             ToastNotification.showToast(
                               msg:
-                                  "La salle ouvre a ${room!.room!.openedAt}.\nL'heure de debut doit etre superieur a l'heure d'ouverture de la salle",
+                                  "Le labo ouvre a ${room!.room!.openedAt}.\nL'heure de debut doit etre superieur a l'heure d'ouverture du labo",
                               msgType: MessageType.error,
                               title: 'Erreur',
                             );
@@ -209,7 +209,7 @@ class _ClientRoomAccessRequestState extends State<ClientRoomAccessRequest> {
                           )) {
                             ToastNotification.showToast(
                               msg:
-                                  "La salle ferme a ${room!.room!.closedAt}.\nL'heure de fin doit etre inferieur a l'heure de fermeture de la salle",
+                                  "Le labo ferme a ${room!.room!.closedAt}.\nL'heure de fin doit etre inferieur a l'heure de fermeture du labo",
                               msgType: MessageType.error,
                               title: 'Erreur',
                             );

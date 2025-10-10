@@ -188,8 +188,7 @@ class Add_UserAccessRoomPState extends State<AddUserAccessRoomP> {
               }
               if (roomManager?.date == null) {
                 ToastNotification.showToast(
-                  msg:
-                      "Veuillez choisir un creneau pour la salle ${room?.name}",
+                  msg: "Veuillez choisir un creneau pour le labo ${room?.name}",
                   msgType: MessageType.error,
                   title: 'Erreur',
                 );
@@ -206,7 +205,7 @@ class Add_UserAccessRoomPState extends State<AddUserAccessRoomP> {
               )) {
                 ToastNotification.showToast(
                   msg:
-                      "La salle ouvre a ${room?.openedAt}.\nL'heure de debut doit etre superieur a l'heure d'ouverture de la salle",
+                      "Le labo ouvre a ${room?.openedAt}.\nL'heure de debut doit etre superieur a l'heure d'ouverture du labo",
                   msgType: MessageType.error,
                   title: 'Erreur',
                 );
@@ -224,7 +223,7 @@ class Add_UserAccessRoomPState extends State<AddUserAccessRoomP> {
               )) {
                 ToastNotification.showToast(
                   msg:
-                      "La salle ferme a ${room?.closedAt}.\nL'heure de fin doit etre inferieur a l'heure de fermeture de la salle",
+                      "Le labo ferme a ${room?.closedAt}.\nL'heure de fin doit etre inferieur a l'heure de fermeture du labo",
                   msgType: MessageType.error,
                   title: 'Erreur',
                 );

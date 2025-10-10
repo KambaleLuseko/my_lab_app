@@ -4,6 +4,9 @@ import 'package:my_lab_app/Resources/Components/text_fields.dart';
 import 'package:my_lab_app/Resources/Constants/global_variables.dart';
 import 'package:my_lab_app/Views/RoomManager/add_manager.page.dart';
 import 'package:my_lab_app/Views/Rooms/controller/room.provider.dart';
+import 'package:my_lab_app/Views/Rooms/model/room.model.dart';
+import 'package:my_lab_app/Views/Services/controller/service.provider.dart';
+import 'package:my_lab_app/Views/Services/model/service.model.dart';
 import 'package:provider/provider.dart';
 
 class AddServicePage extends StatefulWidget {
@@ -19,7 +22,7 @@ class _AddServicePageState extends State<AddServicePage> {
   final _nameController = TextEditingController();
   final _descriptionController = TextEditingController();
   final _roomController = TextEditingController();
-
+  RoomModel? room;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,14 +57,29 @@ class _AddServicePageState extends State<AddServicePage> {
                   if (value == null || value.isEmpty) {
                     return 'Please enter a capacity';
                   }
-                  if (int.tryParse(value) == null || int.parse(value) < 1) {
-                    return 'Please enter a valid number greater than 0';
-                  }
                   return null;
                 },
               ),
               const SizedBox(height: 16),
-              // ItemSelectorWidget(title: "Laboratoire", data: context.read<RoomProvider>().offlineData, callback: callback)
+              ItemSelectorWidget(
+                title: "Laboratoire",
+                displayColumn: 'name',
+                secondaryColumn: 'capacite',
+                data: context
+                    .read<RoomProvider>()
+                    .offlineData
+                    .map(
+                      (e) => {
+                        ...e.toJson(),
+                        'capacite': '${e.capacity} personnes',
+                      },
+                    )
+                    .toList(),
+                callback: (item) {
+                  room = RoomModel.fromJson(item);
+                  setState(() {});
+                },
+              ),
               const SizedBox(height: 24),
               CustomButton(
                 callback: _submitForm,
@@ -75,5 +93,24 @@ class _AddServicePageState extends State<AddServicePage> {
         ),
       ),
     );
+  }
+
+  void _submitForm() {
+    if (_formKey.currentState!.validate()) {
+      // All validations passed. Proceed with submission.
+
+      final body = {
+        'name': _nameController.text,
+        'description': _descriptionController.text.trim(),
+        'salles_id': room?.id,
+        'room': room?.toJson(),
+      };
+      context.read<ServiceProvider>().save(
+        data: ServiceModel.fromJson(body),
+        callback: () {
+          Navigator.pop(context);
+        },
+      );
+    }
   }
 }

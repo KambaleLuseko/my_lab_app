@@ -29,7 +29,7 @@ class MenuProvider extends ChangeNotifier {
         ),
       if (UserProvider.role == UserRolesEnum.admin)
         MenuModel(
-          title: "Salles",
+          title: "Laboratoires",
           page: const RoomPage(),
           icon: Icons.house_siding_rounded,
         ),
@@ -41,14 +41,14 @@ class MenuProvider extends ChangeNotifier {
         ),
       if (UserProvider.role == UserRolesEnum.admin)
         MenuModel(
-          title: "Gestion des salles",
+          title: "Gestion des labos",
           page: const RoomManagerPage(),
           icon: Icons.home_repair_service_rounded,
         ),
       // if (UserProvider.role == UserRolesEnum.agent ||
       //     UserProvider.role == UserRolesEnum.admin)
       MenuModel(
-        title: "Accès aux salles",
+        title: "Accès aux labos",
         page: const UserAccessRoomPage(),
         icon: Icons.lock_clock,
       ),
